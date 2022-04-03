@@ -1,5 +1,6 @@
 package com.si181818.springbootmall.controller;
 
+import com.si181818.springbootmall.constant.ProductCategory;
 import com.si181818.springbootmall.dto.ProductRequest;
 import com.si181818.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,11 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public  ResponseEntity<List<Product>> getProducts() {
-        List<Product> productList = productService.getProducts();
+    public  ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false)  ProductCategory category,
+            @RequestParam (required = false) String search
+    ) {
+        List<Product> productList = productService.getProducts(category,search);
 
         return  ResponseEntity.status(HttpStatus.OK).body(productList);
     }
